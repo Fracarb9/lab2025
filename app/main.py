@@ -1,15 +1,15 @@
 from fastapi import FastAPI
-from routers import books, frontend, users
+from app.routers import books, frontend, users
 from fastapi.staticfiles import StaticFiles
-from data.db import init_database
+from app.data.db import init_database
 from contextlib import asynccontextmanager
 
-
+#Decoratore per l'utilizzo di async whit (gestione risorse asincrone come avvio e chiusura app)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # on start
     init_database()
-    yield
+    yield   #Prima dello yield: eseguito all'avio. Dopo: eseguito alla chiusura dell'app
     # on close
 
 

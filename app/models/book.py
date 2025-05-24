@@ -10,6 +10,7 @@ class BookBase(SQLModel):
 
 class Book(BookBase, table=True):
     id: int = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", primary_key=True)
 
 
 class BookCreate(BookBase):
