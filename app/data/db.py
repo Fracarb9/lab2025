@@ -3,16 +3,19 @@ from typing import Annotated
 from fastapi import Depends
 from faker import Faker
 import os
-from models.book import Book
-from models.user import User
-from models.book_user_link import BookUserLink
+from app.models.book import Book
+from app.models.user import User
+from app.models.book_user_link import BookUserLink
 
 
-sqlite_file_name = "app/data/database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
-connect_args = {"check_same_thread": False}
+sqlite_file_name = "app/data/database.db"  #Percorso del file del DB
+sqlite_url = f"sqlite:///{sqlite_file_name}" #Stringa URL di connessione a SQLAlchemy
+connect_args = {"check_same_thread": False}  #Disattiva il controllo sul thread di origine
 engine = create_engine(sqlite_url, connect_args=connect_args,
-                       echo=True)
+                       echo=True)  #Crea l'engine, l'oggetto che SQLAlchemy usa per connettersi al DB, eseguire query e mantenere sessioni
+#connect_args: passa parametri specifici per SQLite.
+#echo=True: SQLAlchemy stamperà sul terminale tutte le query SQL che esegue — utile per il debugging.
+
 
 
 def init_database():
@@ -44,3 +47,5 @@ def get_session():
 
 
 SessionDep = Annotated[Session, Depends(get_session)]
+
+
